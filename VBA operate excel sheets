@@ -1,0 +1,37 @@
+Sub huizong()
+  Dim rohw As Range
+  Dim drohw As Range
+  Dim dval As Variant
+  Dim dvalyz As Variant
+  Dim heji As Variant
+  Dim romx As Range
+  Dim dromx As Range
+  Dim mxsheet As Worksheets
+  Dim dmxsheet As Worksheet
+  '' rohw = Worksheets("Sheet2").Range("E8:E23")
+  dval = 0
+  dvalyz = 0
+  For Each drohw In Sheet2.Range("e8:e26")
+      For Each dmxsheet In ThisWorkbook.Worksheets
+        If InStr(dmxsheet.Name, "种植") <> 0 Then
+           For Each dromx In dmxsheet.Range("b7:b25")
+               If InStr(Trim(dromx.Text), Trim(drohw.Text)) <> 0 Then
+               dval = dval + dromx.Offset(0, 4).Value
+               End If
+           Next
+        End If
+        If InStr(Trim(dmxsheet.Name), "养殖") <> 0 Then
+              For Each dromx In dmxsheet.Range("b7:b25")
+               If InStr(Trim(dromx.Text), Trim(drohw.Text)) <> 0 Then
+               dvalyz = dvalyz + dromx.Offset(0, 4).Value
+               End If
+              Next
+        End If
+     Next
+     drohw.Offset(0, 2) = dval
+     Debug.Print (dval)
+     drohw.Offset(0, 4) = dvalyz
+     dvalyz = 0
+     dval = 0
+  Next
+  End Sub
